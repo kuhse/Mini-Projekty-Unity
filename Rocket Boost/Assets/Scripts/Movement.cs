@@ -4,6 +4,7 @@ public class Movement : MonoBehaviour
 {
     [SerializeField] InputAction thrust;
     [SerializeField] InputAction rotaion;
+    [SerializeField] AudioClip mainEngine;
     [SerializeField] private float thrustStrength = 1000f;
     [SerializeField] private float rotationStrength = 10f;
 
@@ -35,7 +36,7 @@ public class Movement : MonoBehaviour
             rb.AddRelativeForce(Vector3.up * thrustStrength * Time.fixedDeltaTime);
             if (!audioSource.isPlaying)
             {
-                audioSource.Play();
+                audioSource.PlayOneShot(mainEngine);
             }
         }
         else
@@ -59,8 +60,7 @@ public class Movement : MonoBehaviour
 
     private void ApplyRotation(float rotationThisFrame)
     {
-        Debug.Log("rotacja");
-        rb.freezeRotation = false; // Allow manual control of rotation
+        rb.freezeRotation = false;
         rb.AddRelativeTorque(Vector3.forward * rotationThisFrame * Time.fixedDeltaTime);
         rb.freezeRotation = true;
     }
